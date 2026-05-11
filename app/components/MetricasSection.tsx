@@ -1,79 +1,61 @@
-"use client";
-
-import { motion, useMotionValue, useTransform, animate } from "framer-motion";
-import { useEffect, useRef } from "react";
-
-const metricas = [
-  { id: "pacientes",  valor: 5000,  sufijo: "+",   label: "Nuestras familias" },
-  { id: "anos",       valor: 14,    sufijo: " años", label: "Nuestra historia" },
-  { id: "controles",  valor: 1000,  sufijo: "+",   label: "Controles en gestión" },
-  { id: "afiliados",  valor: 1700,  sufijo: "+",   label: "+1700 afiliados activos" },
-];
-
-function AnimatedNumber({ value, sufijo }: { value: number; sufijo: string }) {
-  const count = useMotionValue(0);
-  const rounded = useTransform(count, (v) => Math.round(v).toLocaleString("es-AR"));
-  const ref = useRef<HTMLSpanElement>(null);
-  const started = useRef(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !started.current) {
-          started.current = true;
-          animate(count, value, { duration: 1.8, ease: "easeOut" });
-        }
-      },
-      { threshold: 0.5 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [count, value]);
-
-  return (
-    <span ref={ref} className="tabular-nums">
-      <motion.span>{rounded}</motion.span>
-      {sufijo}
-    </span>
-  );
-}
-
+// StatsSection — 4 stat cards: sedes, auditoría, años, afiliados
+// Server component — animations via CSS .reveal class
 export default function MetricasSection() {
   return (
-    <section className="bg-[#E8D5F5] py-16">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.h2
-          className="text-center text-2xl sm:text-3xl font-extrabold text-[#1F1F2E] uppercase tracking-wide mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          Desde el año{" "}
-          <span className="text-[#7B4FA6]">2010</span> cuidando familias
-        </motion.h2>
+    <section className="stats">
+      <div className="reveal">
+        <h2 className="section-title upper">NUESTRA TRAYECTORIA</h2>
+      </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8">
-          {metricas.map((m, i) => (
-            <motion.div
-              key={m.id}
-              className="flex flex-col items-center text-center bg-white rounded-2xl py-8 px-4 shadow-sm"
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-            >
-              <span className="text-3xl sm:text-4xl font-extrabold text-[#7B4FA6] leading-none mb-2">
-                <AnimatedNumber value={m.valor} sufijo={m.sufijo} />
-              </span>
-              <span className="text-gray-500 text-xs sm:text-sm font-medium text-center leading-snug">
-                {m.label}
-              </span>
-            </motion.div>
-          ))}
+      <div className="stats-grid">
+        {/* Sedes */}
+        <div className="stat-card reveal">
+          <div className="stat-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+              <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+          </div>
+          <div className="stat-num">5</div>
+          <div className="stat-label">NUESTRAS SEDES</div>
+        </div>
+
+        {/* Auditoría */}
+        <div className="stat-card reveal">
+          <div className="stat-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              <path d="m9 12 2 2 4-4" />
+            </svg>
+          </div>
+          <div className="stat-num">100%</div>
+          <div className="stat-label">AUDITORÍA MÉDICA</div>
+        </div>
+
+        {/* Años */}
+        <div className="stat-card reveal">
+          <div className="stat-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+          </div>
+          <div className="stat-num">16</div>
+          <div className="stat-label">AÑOS DE GESTIÓN</div>
+        </div>
+
+        {/* Afiliados */}
+        <div className="stat-card reveal">
+          <div className="stat-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+          </div>
+          <div className="stat-num">+1000</div>
+          <div className="stat-label">AFILIADOS ACTIVOS</div>
         </div>
       </div>
     </section>
