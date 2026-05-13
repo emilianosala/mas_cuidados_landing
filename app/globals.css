@@ -34,6 +34,7 @@
   --line:           #E7E2EE;
 }
 
+*, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; overflow-x: hidden; }
 body {
   font-family: 'Montserrat', var(--font-montserrat), system-ui, -apple-system, sans-serif;
@@ -304,6 +305,14 @@ section.stats .section-title.upper { color: #4A007D; }
 
   /* Mapa — más chico y sin overflow */
   .caba-map img { width: 80vw !important; max-width: 320px !important; }
+
+  /* Why / Stats — reducir padding lateral y achicar tarjetas */
+  section.why, section.stats { padding-left: 16px; padding-right: 16px; }
+  .why-grid, .stats-grid { gap: 14px; }
+  section.why .why-card, .stat-card { padding: 22px 14px 20px; border-radius: 16px; }
+  section.why .why-card { border-width: 3px; }
+  section.why .why-title, .stat-title { font-size: 15px; }
+  section.why .why-desc, .stat-desc { font-size: 12px; }
 
   /* Testimonios — centrar cabecera, cards más compactas */
   .test-head { text-align: center; max-width: 100%; }
