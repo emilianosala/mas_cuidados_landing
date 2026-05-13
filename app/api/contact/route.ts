@@ -56,6 +56,7 @@ export async function POST(req: NextRequest) {
       getResend().emails.send({
         from: process.env.RESEND_FROM!,
         to: process.env.NOTIFICATION_EMAIL!,
+        replyTo: contacto.email,
         subject: `Nuevo contacto: ${contacto.nombre} — ${contacto.servicio}`,
         html: `
           <h2 style="color:#4A007D;font-family:sans-serif">Nuevo contacto desde el sitio web</h2>
