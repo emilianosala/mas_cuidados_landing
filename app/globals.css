@@ -308,10 +308,10 @@ section.stats .section-title.upper { color: #4A007D; }
 
   /* Why / Stats — reducir padding lateral y achicar tarjetas */
   section.why, section.stats { padding-left: 16px; padding-right: 16px; }
-  .why-grid, .stats-grid { gap: 14px; }
-  section.why .why-card, .stat-card { padding: 22px 14px 20px; border-radius: 16px; }
+  .why-grid, .stats-grid { gap: 14px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  section.why .why-card, .stat-card { padding: 22px 12px 20px; border-radius: 16px; min-width: 0; }
   section.why .why-card { border-width: 3px; }
-  section.why .why-title, .stat-title { font-size: 15px; }
+  section.why .why-title, .stat-title { font-size: 14px; word-break: break-word; hyphens: auto; }
   section.why .why-desc, .stat-desc { font-size: 12px; }
 
   /* Testimonios — centrar cabecera, cards más compactas */
